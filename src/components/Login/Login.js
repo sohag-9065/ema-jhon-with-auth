@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link , useNavigate} from 'react-router-dom';
+import { Link , useLocation, useNavigate} from 'react-router-dom';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init'
 import './Login.css'
@@ -7,7 +7,9 @@ import './Login.css'
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
     const [
         signInWithEmailAndPassword,
         user,
@@ -24,7 +26,7 @@ const Login = () => {
     }
 
     if(user){
-        navigate('/shop');
+        navigate(from, {replace: true});
     }
 
     const handleUserSignIn = event => {
@@ -36,7 +38,7 @@ const Login = () => {
         <div className='form-container'>
             <div>
                 <h2 className='form-title'>Login</h2>
-                <form onSubmit={handleUserSignIn}>
+                <form onSubmit={handleUserSignIn} className='form'>
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
                         <input onBlur={handleEmailBlur} type="email" name='email' required/>

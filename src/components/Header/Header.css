@@ -17,3 +17,6 @@
 .header a:hover{
     color: orange;
 }
+.signOut-button{
+    margin-left: 36px;
+}
